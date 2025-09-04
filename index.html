@@ -7,6 +7,7 @@
     <title>PokeDex</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./assets/fonts/fonts.css">
+    <link rel="stylesheet" href="./assets/styles/colors.css">
     <script src="./script.js"></script>
     <script src="./assets/scripts/templates.js"></script>
     <link rel="shortcut icon" href="./assets/logo/poke-ball.png" type="image/x-icon">
@@ -15,64 +16,14 @@
 <body onload="loadData()" id="body">
     <header>
         <h1>PokeDex</h1>
-
-        <input name="search" placeholder="Suche nach Pokemon">
+        <input name="search" id="searchbar" placeholder="Look for Pokemon" onchange="filterPokemon()">
     </header>
     <main id="main">
         <div id="pokemons">
-            <div class="pokecard">
-                <div class="flip-card-inner">
-                    <div class="pokecard flip-card-front" id="innerpokecard">
-                        <h3 id="pokename">bulbasaur</h3>
-                        <img id="pokepic"
-                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-                            alt="">
-                        <div class="poketype">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/4.png"
-                                alt="">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/12.png"
-                                alt="">
-                        </div>
-                    </div>
-                    <div class="pokecard flip-card-back">
-                        <h3 id="pokename">bulbasaur</h3>
-                        <div class="pokestats">
-                            <div class="stat">
-                                <label for="hp">HP</label>
-                                <p>45</p>
-                            </div>
-                            <progress value="45" max="100" id="hp">HP</progress>
-                            <div class="stat">
-                                <label for="atk">ATK</label>
-                                <p>49</p>
-                            </div>
-                            <progress value="49" max="100" id="atk">49</progress>
-                            <div class="stat">
-                                <label for="def">DEF</label>
-                                <p>49</p>
-                            </div>
-                            <progress value="49" max="100" id="def">49</progress>
-                            <div class="stat">
-                                <label for="satk">S-ATK</label>
-                                <p>65</p>
-                            </div>
-                            <progress value="65" max="100" id="satk">65</progress>
-                            <div class="stat">
-                                <label for="sdef">S-DEF</label>
-                                <p>65</p>
-                            </div>
-                            <progress value="65" max="100" id="sdef">65</progress>
-                            <div class="stat">
-                                <label for="spd">SPD</label>
-                                <p>45</p>
-                            </div>
-                            <progress value="45" max="100" id="spd">45</progress>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </main>
+
 
     <div class="overlay d_none" id="overlay" onclick="toggleModal(), preventBubbling(event)">
 

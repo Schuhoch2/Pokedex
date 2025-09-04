@@ -235,7 +235,7 @@ progress[value]::-moz-progress-value {
     top: 0;
     bottom: 0;
     margin: auto;
-    background-color: green;
+    background-color: grey;
     height: 400px;
     width: 350px;
     display: flex;
@@ -314,8 +314,8 @@ progress[value]::-moz-progress-value {
 }
 
 .evo-chain img {
-    height: 88px !important;
-    width: 88px !important;
+    height: 96px !important;
+    width: 96px !important;
     align-items: center;
 }
 

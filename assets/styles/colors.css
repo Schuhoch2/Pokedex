@@ -1,0 +1,96 @@
+.bg_normal {
+    background-color: grey;
+    color: black;
+}
+
+.bg_fighting {
+    background-color: brown;
+}
+
+.bg_flying {
+    background-color: azure;
+    color: black;
+}
+
+.bg_poison {
+    background-color: purple;
+}
+
+.bg_ground {
+    background-color: burlywood;
+    color: black;
+}
+
+.bg_rock {
+    background-color: slateblue;
+}
+
+.bg_bug {
+    background-color: greenyellow;
+    color: black;
+}
+
+.bg_ghost {
+    background-color: darkturquoise;
+    color: black;
+}
+
+.bg_steel {
+    background-color: steelblue;
+    color: black;
+}
+
+.bg_fire {
+    background-color: orangered;
+}
+
+.bg_water {
+    background-color: aqua;
+    color: black;
+}
+
+.bg_grass {
+    background-color: green;
+}
+
+.bg_electric {
+    background-color: yellow;
+    color: black;
+}
+
+.bg_psychic {
+    background-color: blueviolet;
+}
+
+.bg_ice {
+    background-color: lightblue;
+    color: black;
+}
+
+.bg_dragon {
+    background-color: darkblue;
+}
+
+.bg_dark {
+    background-color: darkmagenta;
+}
+
+.bg_fairy {
+    background-color: pink;
+    color: black;
+}
+
+.bg_stellar {
+    background-color: mediumaquamarine;
+    color: black;
+}
+
+.bg_unknown {
+    background-color: goldenrod;
+    color: black;
+}
+
+.bg_shadow {
+    background-color: darkgray;
+    color: black;
+}

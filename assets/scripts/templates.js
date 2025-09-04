@@ -1,9 +1,9 @@
 function pokeCardHTMLTemplate(p) {
     return `<div class="pokecard" onclick="toggleModal(${p.id})">
                 <div class="flip-card-inner" id="flipcard-${p.id}">
-                    <div class="pokecard flip-card-front" id="innerpokecard-${p.id}">
+                    <div class="pokecard flip-card-front bg_${p.types[0].type.name}" id="innerpokecard-${p.id}">
                          <h3 id="pokename">${p.name}</h3>
-                         <img id="pokepic" src="${p.sprites.other.dream_world.front_default}"alt="">   
+                         <img id="pokepic" src="${p.sprites.front_default}"alt="">   
                          <div id="poketype-${p.id}" class="poketype">           
                          </div>        
                     </div>
@@ -19,7 +19,7 @@ function pokeCardTypeHTMLTemplate(t) {
 }
 
 function pokeStatsHTMLTemplate(s) {
-    return ` <div class="pokecard flip-card-back">
+    return ` <div class="pokecard flip-card-back bg_${s.types[0].type.name}">
                 <div class="pokestats">
                     <h3 id="pokename">${s.name.toUpperCase()}</h3>
                     <div class="stat">
@@ -60,7 +60,7 @@ function pokeGenInfoHTMLTemplate(p) {
     return `
         <div class="deep-info" id="deep-info">    
             <div>
-                <img src="${p.sprites.other.dream_world.front_default}"alt="">
+                <img src="${p.sprites.front_default}"alt="">
             </div>
             <div class="geninfo">    
                 <h3>Height: <br>${p.height * 10}cm</h3>

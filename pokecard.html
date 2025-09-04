@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div class="pokecard">
+        <div class="flip-card-inner">
+            <div class="pokecard flip-card-front">
+                <h3 id="pokename">bulbasaur</h3>
+                <img id="pokepic"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+                    alt="">
+                <div class="poketype">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/4.png"
+                        alt="">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/12.png"
+                        alt="">
+                </div>
+            </div>
+            <div class="pokecard flip-card-back">
+                <h3 id="pokename">bulbasaur</h3>
+                <div class="pokestats">
+                    <div class="stat">
+                        <label for="hp">HP</label>
+                        <p>45</p>
+                    </div>
+                    <progress value="45" max="100" id="hp">HP</progress>
+                    <div class="stat">
+                        <label for="atk">ATK</label>
+                        <p>49</p>
+                    </div>
+                    <progress value="49" max="100" id="atk">49</progress>
+                    <div class="stat">
+                        <label for="def">DEF</label>
+                        <p>49</p>
+                    </div>
+                    <progress value="49" max="100" id="def">49</progress>
+                    <div class="stat">
+                        <label for="satk">S-ATK</label>
+                        <p>65</p>
+                    </div>
+                    <progress value="65" max="100" id="satk">65</progress>
+                    <div class="stat">
+                        <label for="sdef">S-DEF</label>
+                        <p>65</p>
+                    </div>
+                    <progress value="65" max="100" id="sdef">65</progress>
+                    <div class="stat">
+                        <label for="spd">SPD</label>
+                        <p>45</p>
+                    </div>
+                    <progress value="45" max="100" id="spd">45</progress>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-header" id="overlay-header">
+            <button>←</button>
+            <h3>bulbasaur</h3>
+            <button>→</button>
+        </div>
+        <div class="tabs">
+            <a href="">
+                <h4 class="active">Gen. info</h4>
+            </a>
+            <a href="">
+                <h4 class="">Stats</h4>
+            </a>
+            <a href="">
+                <h4 class="">Evo Chain</h4>
+            </a>
+        </div>
+        <div class="deep-info" id="deep-info">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+                alt="">
+            <div class="geninfo">
+                <h3>Height: <br>0.7m</h3>
+                <h3>Weight: <br>690g</h3>
+                <h3>BaseXP: <br>64</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-header" id="overlay-header">
+            <button>←</button>
+            <h3>bulbasaur</h3>
+            <button>→</button>
+        </div>
+        <div class="tabs">
+            <a href="">
+                <h4 class="">Gen. info</h4>
+            </a>
+            <a href="">
+                <h4 class="active">Stats</h4>
+            </a>
+            <a href="">
+                <h4 class="">Evo Chain</h4>
+            </a>
+        </div>
+        <div class="deep-info" id="deep-info">
+            <div class="pokestats">
+                <div class="stat">
+                    <label for="hp">HP</label>
+                    <p>45</p>
+                </div>
+                <progress value="45" max="100" id="hp">HP</progress>
+                <div class="stat">
+                    <label for="atk">ATK</label>
+                    <p>49</p>
+                </div>
+                <progress value="49" max="100" id="atk">49</progress>
+                <div class="stat">
+                    <label for="def">DEF</label>
+                    <p>49</p>
+                </div>
+                <progress value="49" max="100" id="def">49</progress>
+                <div class="stat">
+                    <label for="satk">S-ATK</label>
+                    <p>65</p>
+                </div>
+                <progress value="65" max="100" id="satk">65</progress>
+                <div class="stat">
+                    <label for="sdef">S-DEF</label>
+                    <p>65</p>
+                </div>
+                <progress value="65" max="100" id="sdef">65</progress>
+                <div class="stat">
+                    <label for="spd">SPD</label>
+                    <p>45</p>
+                </div>
+                <progress value="45" max="100" id="spd">45</progress>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-header" id="overlay-header">
+            <button>←</button>
+            <h3>bulbasaur</h3>
+            <button>→</button>
+        </div>
+        <div class="tabs">
+            <a href="">
+                <h4 class="">Gen. info</h4>
+            </a>
+            <a href="">
+                <h4 class="">Stats</h4>
+            </a>
+            <a href="">
+                <h4 class="active">Evo Chain</h4>
+            </a>
+        </div>
+        <div class="deep-info evo-chain" id="deep-info">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+                alt="evo1" id="evo1">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg"
+                alt="evo2" id="evo2">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg"
+                alt="evo3" id="evo3">
+        </div>
+
+    </div>
+
+</body>
+
+</html>

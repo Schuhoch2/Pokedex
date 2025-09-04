@@ -5,20 +5,64 @@ const loadManySpecies = BASE_URL + "pokemon-species/"
 const typeSprites = "generation-vii"
 const gen7 = "lets-go-pikachu-lets-go-eevee"
 const typepic = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/"
-
-
-
-// https://pokeapi.co/api/v2/pokemon/1/
-//     -> name
-//     -> sprites -> other -> home -> front_default: x.png
-
+let allPokemonNames = []
+let currentPokemonNames = []
 
 async function loadData() {
     getData()
     await getPokemon();
-    // getPokemonType();
-    // getPokemonFrontCard()
+    await loadAllPokemons()
+}
 
+function filterPokemon() {
+    let searchbar = document.getElementById('searchbar')
+    console.log(allPokemonNames.filter(pokemon => pokemon.startsWith(searchbar.value)))
+    currentPokemonNames = allPokemonNames.filter(pokemon => pokemon.startsWith(searchbar.value))
+    renderFilteredPokemon(currentPokemonNames)
+}
+
+async function renderFilteredPokemon(filteredCurrent) {
+    try {
+        let mainRef = document.getElementById('pokemons')
+        mainRef.innerHTML = "";
+        for (let index = 0; index < currentPokemonNames.length; index++) {
+            const response = await fetch(loadManyPokemon + currentPokemonNames[index])
+            const result = await response.json()
+            console.log(result)
+            mainRef.innerHTML += pokeCardHTMLTemplate(result)
+            let pokeTypesElement = document.getElementById("poketype-" + result.id)
+            result.types.forEach(t => {
+                let typePicId = t.type.url.slice(31, -1) // Slice everything before and after initial number
+                pokeTypesElement.innerHTML += pokeCardTypeHTMLTemplate(typePicId)
+            })
+            let cardContainer = document.querySelector("#flipcard-" + result.id)
+            cardContainer.innerHTML += pokeStatsHTMLTemplate(result)
+        }
+
+    } catch (error) {
+        console.error(error.message);
+
+    }
+}
+
+async function getAllPokemonNames() {
+    try {
+        const response = await fetch(loadManyPokemon + "?limit=1400")
+        return response.json()
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+async function loadAllPokemons() {
+    try {
+        const pokemonNames = await getAllPokemonNames()
+        for (let index = 0; index < pokemonNames.results.length; index++) {
+            allPokemonNames.push(pokemonNames.results[index].name)
+        }
+    } catch (error) {
+        console.error(error.message)
+    }
 }
 
 async function getSinglePokemon(i) {
@@ -26,11 +70,10 @@ async function getSinglePokemon(i) {
     return response.json();
 }
 
-
 async function getData() {
     try {
         let requests = []
-        for (let index = 1; index < 30; index++) {
+        for (let index = 1; index < 20; index++) {
             requests.push(getSinglePokemon(index))
         }
         return Promise.all(requests)
@@ -38,7 +81,6 @@ async function getData() {
 
     }
 }
-
 
 // Load 10 Pokemon
 async function getPokemon() {
@@ -60,25 +102,6 @@ async function getPokemon() {
     catch (error) {
         console.error(error.message)
     }
-}
-
-async function getPokemonType() {
-    try {
-        i = 1;
-        const response = await fetch(loadManyTypes + i)
-        const result = await response.json();
-        const typeresponse = await fetch(loadManyTypes + type.type.name)
-        const typeresult = await typeresponse.json()
-        console.log(result)
-            // console.log(typeresult.sprites[typeSprites][gen7].name_icon)
-
-            ;
-    } catch (error) {
-
-    }
-
-
-
 }
 
 async function getPokemonFrontCard() {
@@ -148,6 +171,8 @@ function toggleModal(i) {
     let mainRef = document.getElementById('main')
     let bodyRef = document.getElementById('body')
     overlayRef.classList.toggle('d_none')
+
+
     if (!overlayRef.classList.contains('d_none')) {
         mainRef.classList.toggle('filter')
         bodyRef.classList.toggle('noscroll')
@@ -156,7 +181,6 @@ function toggleModal(i) {
         mainRef.classList.toggle('filter')
         bodyRef.classList.remove('noscroll')
     }
-
 }
 
 async function toggleGenInfoTab(p) {
@@ -165,10 +189,12 @@ async function toggleGenInfoTab(p) {
         overlayInfoRef.classList.remove('evo-chain')
     }
     overlayInfoRef.innerHTML = "";
-    const data = await getData();
+    const data = await getSinglePokemon(p);
 
     try {
-        overlayInfoRef.innerHTML += pokeGenInfoHTMLTemplate(data[p - 1])
+        overlayInfoRef.innerHTML += pokeGenInfoHTMLTemplate(data)
+        console.log(data);
+
     } catch (error) {
         console.error(error.message)
     }
@@ -179,10 +205,10 @@ async function toggleStatsTab(p) {
     if (overlayInfoRef.classList.contains('evo-chain')) {
         overlayInfoRef.classList.remove('evo-chain')
     }
-    const data = await getData();
     overlayInfoRef.innerHTML = "";
+    const data = await getSinglePokemon(p);
     try {
-        overlayInfoRef.innerHTML += pokeOverlayStatsHTMLTemplate(data[p - 1])
+        overlayInfoRef.innerHTML += pokeOverlayStatsHTMLTemplate(data)
     } catch (error) {
         console.error(error.message)
     }
@@ -194,17 +220,15 @@ async function request(url) {
 
 
 async function toggleEvoTab(p) {
-    const data = await getData()
+    const data = await getSinglePokemon(p)
     let overlayInfoRef = document.getElementById("deep-info")
     overlayInfoRef.classList.add('evo-chain')
     overlayInfoRef.innerHTML = "";
     try {
         const speciesResult = await request(loadManySpecies + p)
         const evoChainResult = await request(speciesResult.evolution_chain.url)
-        const basePokemon = data.find((pokemon) => pokemon.name === evoChainResult.chain.species.name)
-
+        const basePokemon = await getSinglePokemon(evoChainResult.chain.species.name)
         overlayInfoRef.innerHTML += pokeEvoChainHTMLTemplate(basePokemon)
-
         if (evoChainResult.chain.evolves_to.length > 0) {
             const pokemon = await request(loadManyPokemon + evoChainResult.chain.evolves_to[0].species.name)
             overlayInfoRef.innerHTML += pokeEvoChainHTMLTemplate(pokemon)
