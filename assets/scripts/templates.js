@@ -8,18 +8,23 @@ function pokeCardHTMLTemplate(p) {
                          </div>        
                     </div>
                 </div>     
-            </div>             
-             `
+            </div>`
+}
 
+function pokeCardLoadingHTMLTemplate() {
+    return `<div class="pokecard" id="loadcard">
+                <div class="flip-card-inner no-flip">    
+                    <button class="loadbtn" onclick="getPokemon()">Load More</button>
+                </div>
+            </div>`
 }
 
 function pokeCardTypeHTMLTemplate(t) {
-    return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${t}.png"alt="Type">
-                 `
+    return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${t}.png"alt="Type">`
 }
 
 function pokeStatsHTMLTemplate(s) {
-    return ` <div class="pokecard flip-card-back bg_${s.types[0].type.name}">
+    return `<div class="pokecard flip-card-back bg_${s.types[0].type.name}">
                 <div class="pokestats">
                     <h3 id="pokename">${s.name.toUpperCase()}</h3>
                     <div class="stat">
@@ -57,80 +62,78 @@ function pokeStatsHTMLTemplate(s) {
 }
 
 function pokeGenInfoHTMLTemplate(p) {
-    return `
-        <div class="deep-info" id="deep-info">    
-            <div>
-                <img src="${p.sprites.front_default}"alt="">
-            </div>
-            <div class="geninfo">    
-                <h3>Height: <br>${p.height * 10}cm</h3>
-                <h3>Weight: <br>${p.weight * 10}g</h3>
-                <h3>BaseXP: <br>${p.base_experience}</h3>
-            </div> 
-        </div>`
+    return `<div class="deep-info" id="deep-info">    
+                <div>
+                    <img src="${p.sprites.front_default}"alt="">
+                </div>
+                <div class="geninfo">    
+                    <h3>Height: <br>${p.height * 10}cm</h3>
+                    <h3>Weight: <br>${p.weight * 10}g</h3>
+                    <h3>BaseXP: <br>${p.base_experience}</h3>
+                </div> 
+            </div>`
 }
 
 function pokeEvoChainHTMLTemplate(p) {
-    return `
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${p.id}.svg"
-                alt="evo1">
-    `
+    return `<img src="${p.sprites.front_default}" alt="evo">`
 }
 
-
 function overlayHeaderHTMLTemplate(p) {
-    return `
-    <div class="overlay-header" id="overlay-header" onclick="preventBubbling(event)">
-        <button>←</button>
-        <h3>${p.name}</h3>
-        <button>→</button>
-    </div>
-    <div class="tabs" onclick="preventBubbling(event)">
-        <button onclick="toggleGenInfoTab(${p.id})">
-            <h4 class="active" id="tab-geninfo">Gen. info</h4>
-        </button>
-        <button onclick="toggleStatsTab(${p.id})">
-            <h4 class="" id="tab-stats">Stats</h4>
-        </button>
-        <button onclick="toggleEvoTab(${p.id})">
-            <h4 class="" id="tab-evochain">Evo Chain</h4>
-        </button>
-    </div>
-    `
+    return `<div class="overlay-header" id="overlay-header" onclick="preventBubbling(event)">
+                <button id="minus" onclick="navigateToCard(${p.id - 1})">←</button>
+                <h3>${p.name}</h3>
+                <button id="plus"onclick="navigateToCard(${p.id + 1})">→</button>
+            </div>
+            <div class="tabs" onclick="preventBubbling(event)">
+                <button id="gentab" onclick="toggleGenInfoTab(${p.id})">
+                    <h4 class="" id="tab-geninfo">Gen. info</h4>
+                </button>
+                <button id="statstab" onclick="toggleStatsTab(${p.id})">
+                    <h4 class="" id="tab-stats">Stats</h4>
+                </button>
+                <button id="evotab" onclick="toggleEvoTab(${p.id})">
+                    <h4 class="" id="tab-evochain">Evo Chain</h4>
+                </button>
+            </div>`
 }
 
 function pokeOverlayStatsHTMLTemplate(s) {
-    return `    <div class="pokestats">
-                    <div class="stat">
-                        <label for="hp">HP</label>
-                        <p>${s.stats[0].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[0].base_stat}" max="255" id="hp">HP</progress>
-                    <div class="stat">
-                        <label for="atk">ATK</label>
-                        <p>${s.stats[1].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[1].base_stat}" max="255" id="atk">49</progress>
-                    <div class="stat">
-                        <label for="def">DEF</label>
-                        <p>${s.stats[2].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[2].base_stat}" max="255" id="def">49</progress>
-                    <div class="stat">
-                        <label for="satk">S-ATK</label>
-                        <p>${s.stats[3].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[3].base_stat}" max="255" id="satk">65</progress>
-                    <div class="stat">
-                        <label for="sdef">S-DEF</label>
-                        <p>${s.stats[4].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[4].base_stat}" max="255" id="sdef">65</progress>
-                    <div class="stat">
-                        <label for="spd">SPD</label>
-                        <p>${s.stats[5].base_stat}</p>
-                    </div>
-                    <progress value="${s.stats[5].base_stat}" max="255" id="spd">45</progress>
+    return `<div class="pokestats">
+                <div class="stat">
+                    <label for="hp">HP</label>
+                    <p>${s.stats[0].base_stat}</p>
                 </div>
-    `
+                <progress value="${s.stats[0].base_stat}" max="255" id="hp">HP</progress>
+                <div class="stat">
+                    <label for="atk">ATK</label>
+                    <p>${s.stats[1].base_stat}</p>
+                </div>
+                <progress value="${s.stats[1].base_stat}" max="255" id="atk">49</progress>
+                <div class="stat">
+                    <label for="def">DEF</label>
+                    <p>${s.stats[2].base_stat}</p>
+                </div>
+                <progress value="${s.stats[2].base_stat}" max="255" id="def">49</progress>
+                <div class="stat">
+                    <label for="satk">S-ATK</label>
+                    <p>${s.stats[3].base_stat}</p>
+                </div>
+                <progress value="${s.stats[3].base_stat}" max="255" id="satk">65</progress>
+                <div class="stat">
+                    <label for="sdef">S-DEF</label>
+                    <p>${s.stats[4].base_stat}</p>
+                </div>
+                <progress value="${s.stats[4].base_stat}" max="255" id="sdef">65</progress>
+                <div class="stat">
+                    <label for="spd">SPD</label>
+                    <p>${s.stats[5].base_stat}</p>
+                </div>
+                <progress value="${s.stats[5].base_stat}" max="255" id="spd">45</progress>
+            </div>`
+}
+
+function loaderHTMLTemplate() {
+    return `<div id="loading_ball">
+    <img class="loading_ball" src="./assets/img/loading_pokeball.png">
+    </div>`
 }
