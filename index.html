@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./assets/fonts/fonts.css">
     <link rel="stylesheet" href="./assets/styles/colors.css">
+    <link rel="stylesheet" href="./assets/styles/responsive.css">
     <script src="./script.js"></script>
     <script src="./assets/scripts/templates.js"></script>
     <link rel="shortcut icon" href="./assets/logo/poke-ball.png" type="image/x-icon">
@@ -16,21 +17,21 @@
 <body onload="loadData()" id="body">
     <header>
         <h1>PokeDex</h1>
-        <input name="search" id="searchbar" placeholder="Look for Pokemon" onchange="filterPokemon()">
+        <input name="search" id="searchbar" placeholder="Look for Pokemon" onkeyup="filterPokemon()">
     </header>
     <main id="main">
         <div id="pokemons">
 
         </div>
+
     </main>
 
-
-    <div class="overlay d_none" id="overlay" onclick="toggleModal(), preventBubbling(event)">
-
+    <div class="overlaywrapper d_none" id="overlaywrapper" onclick="toggleModal()">
+        <div class="overlay d_none" id="overlay" onclick="preventBubbling(event)">
+        </div>
     </div>
-
     <footer>
-        <button></button>
+
     </footer>
 </body>
 
