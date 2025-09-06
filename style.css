@@ -29,10 +29,16 @@ header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.disable {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 header h1 {
     font-family: "Pokemon", sans-serif;
     font-size: 60px;
-    margin: 0;
+    margin-top: 38px;
+    margin-bottom: 78px;
     padding-left: 24px;
 
 }
@@ -80,6 +86,8 @@ footer {
     bottom: 0;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 112px;
     width: 100%;
     box-shadow: 0px -4px 8px 0 rgba(0, 0, 0, 0.2), 0px -6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -89,7 +97,44 @@ footer {
     max-width: 1920px;
 }
 
+.loading_ball {
+    width: 150px;
+    height: 150px;
+    animation: rotateBall 800ms linear infinite;
+}
 
+@keyframes rotateBall {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loadbtn {
+    background-color: #626262;
+    color: black;
+    font-size: 16px;
+    font-weight: 700;
+    appearance: none;
+    border-radius: 16px;
+    height: 50px;
+    outline: none;
+    border-width: 0;
+    padding: 0 30px;
+    cursor: pointer;
+}
+
+.loadbtn:hover {
+    background-color: white;
+
+}
 
 .pokecard {
     display: flex;
@@ -121,6 +166,15 @@ footer {
     perspective: 1000px;
 }
 
+.no-flip {
+    display: flex;
+    transform: none !important;
+    box-sizing: border-box;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
 .pokecard:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
@@ -149,12 +203,10 @@ footer {
 }
 
 .flip-card-front {
-    background-color: green;
     color: black;
 }
 
 .flip-card-back {
-    background-color: #626262;
     color: white;
     transform: rotateY(180deg);
 }
@@ -245,6 +297,14 @@ progress[value]::-moz-progress-value {
     border-radius: 16px;
 }
 
+.overlaywrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+}
+
 .deep-info {
     display: flex;
     flex-direction: column;
@@ -297,8 +357,11 @@ progress[value]::-moz-progress-value {
     margin-bottom: 8px;
 }
 
-.active {
-    font-weight: 800 !important;
+.tabs button {
+    background-color: whitesmoke;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #424242;
 }
 
 .tabs h4 {
@@ -318,20 +381,6 @@ progress[value]::-moz-progress-value {
     width: 96px !important;
     align-items: center;
 }
-
-/* #evo1 {
-    align-self: flex-start;
-    margin-left: 16px;
-}
-
-#evo2 {
-    align-self: center;
-}
-
-#evo3 {
-    align-self: flex-end;
-    margin-right: 16px;
-} */
 
 .filter {
     filter: blur(8px);
