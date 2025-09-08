@@ -14,13 +14,13 @@ async function loadData() {
 
 function filterPokemon() {
     let searchbar = document.getElementById('searchbar')
+    let mainRef = document.getElementById("pokemons")
     if (searchbar.value.length > 2) {
-        currentPokemonNames = allPokemonNames.filter(pokemon => pokemon.startsWith(searchbar.value))
-        renderFilteredPokemon()
-
+        currentPokemonNames = allPokemonNames.filter(pokemon => pokemon.startsWith(searchbar.value.toLowerCase()))
+        if (currentPokemonNames.length == 0) mainRef.innerHTML = noPokemonNamesHTMLTemplate()
+        else renderFilteredPokemon()
     } else if (searchbar.value.length < 1) {
         page = 1
-        const mainRef = document.getElementById("pokemons")
         mainRef.innerHTML = ""
         getPokemon()
     }
@@ -170,6 +170,7 @@ function toggleModal(i) {
     let mainRef = document.getElementById('main')
     let bodyRef = document.getElementById('body')
     let overlayWrapper = document.getElementById('overlaywrapper')
+
     overlayRef.classList.toggle('d_none')
     if (!overlayRef.classList.contains('d_none')) {
         mainRef.classList.toggle('filter')
@@ -258,13 +259,5 @@ function preventBubbling(event) {
 }
 
 function navigateToCard(id) {
-    let minusBtn = document.getElementById('minus')
-    let plusBtn = document.getElementById('plus')
-    if (id < 1) {
-        minusBtn.classList.add('disable')
-        return
-    } else if (id > 1309) {
-        plusBtn.class.add('disable')
-    }
     getModalInner(id)
 }
