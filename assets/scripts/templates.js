@@ -67,9 +67,9 @@ function pokeGenInfoHTMLTemplate(p) {
                     <img src="${p.sprites.front_default}"alt="">
                 </div>
                 <div class="geninfo">    
-                    <h3>Height: <br>${p.height * 10}cm</h3>
-                    <h3>Weight: <br>${p.weight * 10}g</h3>
-                    <h3>BaseXP: <br>${p.base_experience}</h3>
+                    <h3>Height<br>${p.height * 10}cm</h3>
+                    <h3>Weight<br>${p.weight * 10}g</h3>
+                    <h3>BaseXP<br>${p.base_experience}</h3>
                 </div> 
             </div>`
 }
@@ -81,10 +81,13 @@ function pokeEvoChainHTMLTemplate(p) {
 function overlayHeaderHTMLTemplate(p) {
     return `<div class="overlay-header" id="overlay-header" onclick="preventBubbling(event)">
                 <div class="navbuttons">            
-                    <button id="minus" onclick="navigateToCard(${p.id - 1})">←</button>
-                    <button id="plus"onclick="navigateToCard(${p.id + 1})">→</button>
+                    <button id="minus" ${p.id === 1 && "disabled"} onclick="navigateToCard(${p.id - 1})">←</button>
+                    <button id="plus" ${p.id > 1309 && "disabled"} onclick="navigateToCard(${p.id + 1})">→</button>
                 </div>
-                <h3>${p.name}</h3>
+                <div class="header-inner-container">
+                    <span class="pokemon-identifier">#${p.id}</span>
+                    <h3>${p.name}</h3>
+                </div>
                 <button id="close" onclick="toggleModal()">x</button>
             </div>
             <div class="tabs" onclick="preventBubbling(event)">
@@ -139,4 +142,10 @@ function loaderHTMLTemplate() {
     return `<div id="loading_ball">
     <img class="loading_ball" src="./assets/img/loading_pokeball.png">
     </div>`
+}
+
+function noPokemonNamesHTMLTemplate() {
+    return `<span style="font-size: 24px;">
+                ¯\\_(ツ)_/¯ No Pokemons with this name ¯\\_(ツ)_/¯
+            </span>`
 }
