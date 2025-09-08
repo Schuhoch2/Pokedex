@@ -52,9 +52,24 @@
     background-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0px 2px 6px 0 rgba(0, 0, 0, 0.19);
     text-transform: capitalize;
+
+    .header-inner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        .pokemon-identifier {
+            font-weight: 600;
+            border-radius: 5px;
+            padding: 3px 6px;
+            background-color: GRAY;
+        }
+    }
 }
 
 .overlay-header button {
+    cursor: pointer;
     background-color: #424242;
     border-radius: 8px;
     height: 32px;
@@ -69,18 +84,28 @@
     color: whitesmoke;
 }
 
+.overlay-header button:disabled {
+    cursor: not-allowed;
+    background-color: whitesmoke;
+    color: #626262;
+}
+
+
 .tabs {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
     width: 100%;
+    box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.1);
     box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.1), 0px 3px 10px 0 rgba(0, 0, 0, 0.10);
     margin-bottom: 8px;
+    padding: 0 5px;
 }
 
 .tabs button {
+    cursor: pointer;
     width: 33%;
     background-color: whitesmoke;
     border-radius: 8px;
