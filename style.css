@@ -166,6 +166,7 @@ footer {
     padding: 10px;
     align-items: center;
     justify-content: center;
+    cursor: auto !important;
 }
 
 .pokecard:hover .flip-card-inner {
@@ -173,7 +174,7 @@ footer {
 }
 
 .flip-card-inner {
-
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 100%;
