@@ -26,22 +26,37 @@ function filterPokemon() {
     }
 }
 
+function createFilteredCard(result) {
+    let mainRef = document.getElementById('pokemons')
+    mainRef.innerHTML += pokeCardHTMLTemplate(result)
+
+    let pokeTypesElement = document.getElementById("poketype-" + result.id)
+    result.types.forEach(t => {
+        let typePicId = t.type.url.slice(31, -1) // Slice everything before and after initial number
+        pokeTypesElement.innerHTML += pokeCardTypeHTMLTemplate(typePicId)
+    })
+
+    let cardContainer = document.querySelector("#flipcard-" + result.id)
+    cardContainer.innerHTML += pokeStatsHTMLTemplate(result)
+}
+
+async function fetchPokeCard() {
+    try {
+        for (let index = 0; index < currentPokemonNames.length; index++) {
+            const response = await fetch(loadManyPokemon + currentPokemonNames[index])
+            const result = await response.json()
+            createFilteredCard(result)
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 async function renderFilteredPokemon() {
     try {
         let mainRef = document.getElementById('pokemons')
         mainRef.innerHTML = "";
-        for (let index = 0; index < currentPokemonNames.length; index++) {
-            const response = await fetch(loadManyPokemon + currentPokemonNames[index])
-            const result = await response.json()
-            mainRef.innerHTML += pokeCardHTMLTemplate(result)
-            let pokeTypesElement = document.getElementById("poketype-" + result.id)
-            result.types.forEach(t => {
-                let typePicId = t.type.url.slice(31, -1) // Slice everything before and after initial number
-                pokeTypesElement.innerHTML += pokeCardTypeHTMLTemplate(typePicId)
-            })
-            let cardContainer = document.querySelector("#flipcard-" + result.id)
-            cardContainer.innerHTML += pokeStatsHTMLTemplate(result)
-        }
+        fetchPokeCard()
     } catch (error) {
         console.error(error.message);
     }
@@ -84,32 +99,46 @@ async function getData(page) {
     }
 }
 
+function createPokecard(data) {
+    let mainRef = document.getElementById('pokemons')
+    for (let i = 0; i < data.length; i++) {
+        mainRef.innerHTML += pokeCardHTMLTemplate(data[i])
+        let pokeTypesElement = document.getElementById("poketype-" + data[i].id)
+        data[i].types.forEach(t => {
+            let typePicId = t.type.url.slice(31, -1) // Slice URL before and after Pokemon-ID
+            pokeTypesElement.innerHTML += pokeCardTypeHTMLTemplate(typePicId)
+        })
+        let cardContainer = document.querySelector("#flipcard-" + data[i].id)
+        cardContainer.innerHTML += pokeStatsHTMLTemplate(data[i])
+        page++
+    }
+}
+
+function disableLoader() {
+    let mainRef = document.getElementById('pokemons')
+    let loader = document.getElementById('loading_ball')
+    if (loader) {
+        mainRef.removeChild(loader)
+    }
+}
+
+function removeLoadBtn() {
+    let mainRef = document.getElementById('pokemons')
+    let loadBtn = document.getElementById('loadcard')
+    if (loadBtn) {
+        mainRef.removeChild(loadBtn)
+    }
+}
+
 async function getPokemon() {
     try {
         let mainRef = document.getElementById('pokemons')
-        let loadBtn = document.getElementById('loadcard')
-        if (loadBtn) {
-            mainRef.removeChild(loadBtn)
-        }
+        removeLoadBtn()
         mainRef.innerHTML += loaderHTMLTemplate()
-
         const data = await getData(page)
-        for (let i = 0; i < data.length; i++) {
-            mainRef.innerHTML += pokeCardHTMLTemplate(data[i])
-            let pokeTypesElement = document.getElementById("poketype-" + data[i].id)
-            data[i].types.forEach(t => {
-                let typePicId = t.type.url.slice(31, -1) // Slice URL before and after Pokemon-ID
-                pokeTypesElement.innerHTML += pokeCardTypeHTMLTemplate(typePicId)
-            })
-            let cardContainer = document.querySelector("#flipcard-" + data[i].id)
-            cardContainer.innerHTML += pokeStatsHTMLTemplate(data[i])
-            page++
-        }
+        disableLoader()
+        createPokecard(data)
         mainRef.innerHTML += pokeCardLoadingHTMLTemplate()
-        let loader = document.getElementById('loading_ball')
-        if (loader) {
-            mainRef.removeChild(loader)
-        }
     }
     catch (error) {
         console.error(error.message)
@@ -186,26 +215,32 @@ async function request(url) {
     return (await fetch(url)).json()
 }
 
+async function evoChain(evoChainResult, basePokemon) {
+    let template = ""
+    template += pokeEvoChainHTMLTemplate(basePokemon)
+
+    if (evoChainResult.chain.evolves_to.length > 0) {
+        const pokemon = await request(loadManyPokemon + evoChainResult.chain.evolves_to[0].species.name)
+        template += pokeEvoChainHTMLTemplate(pokemon)
+
+        if (evoChainResult.chain.evolves_to[0].evolves_to.length > 0) {
+            const pokemon = await request(loadManyPokemon + evoChainResult.chain.evolves_to[0].evolves_to[0].species.name)
+            template += pokeEvoChainHTMLTemplate(pokemon)
+        }
+    }
+    return template
+}
+
 async function getEvo(p) {
     try {
         let overlayInfoRef = document.getElementById("deep-info")
         overlayInfoRef.innerHTML = loaderHTMLTemplate()
+
         const speciesResult = await request(loadManySpecies + p)
         const evoChainResult = await request(speciesResult.evolution_chain.url)
         const basePokemon = await getSinglePokemon(evoChainResult.chain.species.name)
-        let template = ""
 
-        template += pokeEvoChainHTMLTemplate(basePokemon)
-        if (evoChainResult.chain.evolves_to.length > 0) {
-            const pokemon = await request(loadManyPokemon + evoChainResult.chain.evolves_to[0].species.name)
-            template += pokeEvoChainHTMLTemplate(pokemon)
-
-            if (evoChainResult.chain.evolves_to[0].evolves_to.length > 0) {
-                const pokemon = await request(loadManyPokemon + evoChainResult.chain.evolves_to[0].evolves_to[0].species.name)
-                template += pokeEvoChainHTMLTemplate(pokemon)
-            }
-        }
-        overlayInfoRef.innerHTML = template
+        overlayInfoRef.innerHTML = await evoChain(evoChainResult, basePokemon)
     } catch (error) {
         console.error(error.message)
     }
