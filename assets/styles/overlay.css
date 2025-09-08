@@ -64,6 +64,11 @@
     color: whitesmoke;
 }
 
+.overlay-header button:hover {
+    background-color: #626262;
+    color: whitesmoke;
+}
+
 .tabs {
     display: flex;
     flex-direction: row;
