@@ -80,9 +80,12 @@ function pokeEvoChainHTMLTemplate(p) {
 
 function overlayHeaderHTMLTemplate(p) {
     return `<div class="overlay-header" id="overlay-header" onclick="preventBubbling(event)">
-                <button id="minus" onclick="navigateToCard(${p.id - 1})">←</button>
+                <div class="navbuttons">            
+                    <button id="minus" onclick="navigateToCard(${p.id - 1})">←</button>
+                    <button id="plus"onclick="navigateToCard(${p.id + 1})">→</button>
+                </div>
                 <h3>${p.name}</h3>
-                <button id="plus"onclick="navigateToCard(${p.id + 1})">→</button>
+                <button id="close" onclick="toggleModal()">x</button>
             </div>
             <div class="tabs" onclick="preventBubbling(event)">
                 <button id="gentab" onclick="toggleGenInfoTab(${p.id})">
